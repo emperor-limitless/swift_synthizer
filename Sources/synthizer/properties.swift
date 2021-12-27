@@ -7,7 +7,8 @@ import Csynthizer
 // The main property that all the properties will inherit from.
 
 public class PropertyBase {
-    var instance: BaseObject
+    // Using unowned references here is safe because a property isn't supposed to exist when the main holder for it is nonexistent.
+    unowned var instance: BaseObject
     var property: Int32
     init(_ instance: BaseObject, _ property: Int32) {
         self.instance = instance

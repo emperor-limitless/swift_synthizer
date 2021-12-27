@@ -22,23 +22,26 @@ while true {
 print("Enter command.")
 if let txt = readLine() {
 let cmd = txt.split(separator: " ")
+if cmd.count == 0 {
+continue
+}
 if cmd[0] == "pause" {
 try? src.pause()
 } else if cmd[0] == "play" {
 try? src.play()
 } else if cmd[0] == "gain" {
-if cmd.count < 1 {
+if cmd.count != 2 {
 print("Usage: gain <Value>")
 continue
 }
 if let val = Double(cmd[1]) {
 try src.gain.set(val)
 } else {
-print("Error, Invalid input, Must be a valid floating point number.")
+print("Error, Invalid input, Must be a valid integer.")
 continue
 }
 } else if cmd[0] == "seek" {
-if cmd.count < 1 {
+if cmd.count != 2 {
 print("Usage: seek <Seconds>")
 continue
 }
@@ -49,7 +52,7 @@ print("Error, Invalid input, Must be a valid floating point number.")
 continue
 }
 } else if cmd[0] == "pos" {
-if cmd.count < 3 {
+if cmd.count != 4 {
 print("Usage: pos <x> <y> <z>")
 continue
 }
@@ -58,9 +61,10 @@ try src.position.set((x, y, z))
 } else if cmd[0] == "quit" {
 break
 }
+} else {
+print("Unknown command!")
 }
 }
-
 try ctx.destroy()
 try gen.destroy()
 try src.destroy()
