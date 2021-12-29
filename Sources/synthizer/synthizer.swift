@@ -6,12 +6,15 @@ public func initialize(log_level: LogLevel? = nil, logging_backend: LoggingBacke
         try CHECKED(syz_initialize())
         return
     }
-    var config = syz_LibraryConfig(log_level: logl.rawValue, logging_backend: logb.rawValue, libsndfile_path: nil)
-    if let libsndfile = libsndfile_path {
-        config.libsndfile_path = (libsndfile as NSString).utf8String
+    if let path = libsndfile_path {
+        try path.withCString { ptr in
+            var config = syz_LibraryConfig(log_level: logl.rawValue, logging_backend: logb.rawValue, libsndfile_path: ptr)
+            try CHECKED(syz_initializeWithConfig(&config))
+        }
+    } else {
+        var config = syz_LibraryConfig(log_level: logl.rawValue, logging_backend: logb.rawValue, libsndfile_path: nil)
+        try CHECKED(syz_initializeWithConfig(&config))
     }
-    try CHECKED(syz_initializeWithConfig(&config))
-
 }
 public func shutdown() throws {
     try CHECKED(syz_shutdown())

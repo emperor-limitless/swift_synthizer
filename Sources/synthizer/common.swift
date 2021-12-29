@@ -24,7 +24,7 @@ public class BaseObject {
         handle
     }
     public func configDeleteBehavior(linger: Bool, timeout: Double) throws {
-        var cfg = syz_DeleteBehaviorConfig(linger: linger == true ? 1 : 0, linger_timeout: timeout)
+        var cfg = syz_DeleteBehaviorConfig(linger: linger ? 1 : 0, linger_timeout: timeout)
         syz_initDeleteBehaviorConfig(&cfg)
         try CHECKED(syz_configDeleteBehavior(handle, &cfg))
     }

@@ -1,4 +1,5 @@
 module Csynthizer [system][extern_c] {
     umbrella header "include/synthizer.h"
+    link "synthizer"
     export *
 }

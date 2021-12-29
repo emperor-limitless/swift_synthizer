@@ -3,12 +3,6 @@
 
 import PackageDescription
 
-var libname: String = "synthizer"
-#if os(Linux)
-    libname = "libsynthizer"
-#elseif os(macOS)
-    libname = "synthizer"
-#endif
 let package = Package(
     name: "synthizer",
     products: [
@@ -27,6 +21,6 @@ let package = Package(
             name: "Csynthizer"),
         .target(
             name: "synthizer",
-            dependencies: ["Csynthizer"], linkerSettings: [.linkedLibrary(libname)]),
+            dependencies: ["Csynthizer"]),
     ]
 )
