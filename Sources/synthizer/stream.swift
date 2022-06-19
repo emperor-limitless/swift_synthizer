@@ -1,9 +1,16 @@
 import Csynthizer
 import Foundation
 public class StreamHandle: BaseObject {
-    override required init(handle: UInt64) {
+    var buf: UnsafePointer<Int8>?
+    init(handle: UInt64, buffer: Unsafe<Int8>? = nil) {
         super.init(handle: handle)
+        buf = buffer
     }
+    deinit {
+        if buf {
+            print("Deallocating buffer.")
+            buf.deallocate()
+        }
     public static func fromFile(path: String) throws -> StreamHandle {
         var handle = syz_Handle()
         //let ph = (path as NSString).utf8String
