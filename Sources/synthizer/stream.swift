@@ -7,7 +7,9 @@ public class StreamHandle: BaseObject {
     public static func fromFile(path: String) throws -> StreamHandle {
         var handle = syz_Handle()
         //let ph = (path as NSString).utf8String
-        try CHECKED(syz_createStreamHandleFromFile(&handle, path, nil, nil))
+        try path.withCString { ptr in
+            try CHECKED(syz_createStreamHandleFromFile(&handle, ptr, nil, nil))
+        }
         return self.init(handle: handle)
     }
     
