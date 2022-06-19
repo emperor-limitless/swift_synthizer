@@ -7,9 +7,9 @@ public class StreamHandle: BaseObject {
         buf = buffer
     }
     deinit {
-        if buf {
+        if let fb = buf {
             print("Deallocating buffer.")
-            buf.deallocate()
+            fb.deallocate()
         }
     public static func fromFile(path: String) throws -> StreamHandle {
         var handle = syz_Handle()
