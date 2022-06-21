@@ -19,6 +19,11 @@ public class BaseObject {
     }
     public func destroy() throws {
         try CHECKED(syz_handleDecRef(handle))
+        if let sh = self as? StreamHandle {
+            if let fb = sh.buf {
+                fb.deallocate()
+            }
+        }
     }
     func getHandle() -> UInt64 {
         handle
